@@ -21,7 +21,7 @@ public class TicTacToe implements ActionListener{
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
 
-        text_filed.setBackground(new Color(25,25,25));
+        text_filed.setBackground(new Color(33,47,61));
         text_filed.setForeground(new Color(25,255,0));
         text_filed.setFont(new Font("HGP創英角ﾎﾟｯﾌﾟ体", Font.PLAIN, 75));
         text_filed.setHorizontalAlignment(JLabel.CENTER);
@@ -32,14 +32,18 @@ public class TicTacToe implements ActionListener{
         title_panel.setBounds(0,0,800,100);
 
         button_panel.setLayout(new GridLayout(3,3));
-        button_panel.setBackground(new Color(150,150,150));
+        button_panel.setBackground(new Color(23,32,42));
 
         for(int i = 0; i < 9; i++){
             buttons[i] = new JButton();
+            buttons[i].setBackground(new Color(23,32,42));
             button_panel.add(buttons[i]);
             buttons[i].setFont(new Font("HGP創英角ﾎﾟｯﾌﾟ体", Font.PLAIN, 120));
+            // Tabボタンでボタンにフォーカスされるようにするかの設定。
             buttons[i].setFocusable(false);
+            // 各ボタンにアクションリスナーを設定する。対象はtictactoeインスタンス
             buttons[i].addActionListener(this);
+            buttons[i].setEnabled(false);
         }
 
         title_panel.add(text_filed);
@@ -52,22 +56,22 @@ public class TicTacToe implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
 
-        for (int i = 0; i < 9; i++){
-            if (e.getSource() == buttons[i]){
+        for (JButton button: buttons){
+            if (e.getSource() == button){
                 if (player1_turn){
-                    if (buttons[i].getText() == ""){
-                        buttons[i].setForeground(new Color(255, 0, 0));
-                        buttons[i].setText("×");
+                    if (button.getText() == ""){
+                        button.setForeground(new Color(255, 0, 0));
+                        button.setText("×");
                         player1_turn = false;
-                        text_filed.setText("○のターンです!");
+                        text_filed.setText("○の番です!");
                         check();
-                    }
+                    } 
                 } else {
-                    if (buttons[i].getText() == ""){
-                        buttons[i].setForeground(new Color(0, 0, 255));
-                        buttons[i].setText("○");
+                    if (button.getText() == ""){
+                        button.setForeground(new Color(0, 0, 255));
+                        button.setText("○");
                         player1_turn = true;
-                        text_filed.setText("×のターンです!");
+                        text_filed.setText("×の番です!");
                         check();
                     }
                 }
@@ -83,6 +87,10 @@ public class TicTacToe implements ActionListener{
             e.printStackTrace();
         }
 
+        for (JButton button: buttons){
+            button.setEnabled(true);
+        }
+
         if (random.nextInt(2) == 0){
             player1_turn = true;
             text_filed.setText("×のターンです!");
@@ -94,14 +102,43 @@ public class TicTacToe implements ActionListener{
 
     public void check(){
 
+        int[][] winningPosition = {
+            {0, 1, 2},
+            {3, 4, 5},
+            {6, 7, 8},
+            {0, 3, 6},
+            {1, 4, 7},
+            {2, 5, 8},
+            {0, 4, 8},
+            {2, 4, 6}
+        };
+
+        for (int[] pos: winningPosition){
+            if ((buttons[pos[0]].getText() == "×") &&
+                (buttons[pos[1]].getText() == "×") &&
+                (buttons[pos[2]].getText() == "×")
+            ){
+                checkWhichWin(pos[0], pos[1], pos[2]);
+                text_filed.setText("×の勝ちです!!");
+            } else if (
+                (buttons[pos[0]].getText() == "○") &&
+                (buttons[pos[1]].getText() == "○") &&
+                (buttons[pos[2]].getText() == "○")
+            ){
+                checkWhichWin(pos[0], pos[1], pos[2]);
+                text_filed.setText("○の勝ちです!!");
+            }
+        }
     }
 
-    public void xWin(int a, int b, int c){
+    public void checkWhichWin(int a, int b, int c){
 
+        buttons[a].setBackground(Color.GREEN);
+        buttons[b].setBackground(Color.GREEN);
+        buttons[c].setBackground(Color.GREEN);
+
+        for (JButton button: buttons){
+            button.setEnabled(false);
+        }
     }
-
-    public void oWin(int a, int b, int c){
-
-    }
-
 }
