@@ -59,19 +59,19 @@ public class TicTacToe implements ActionListener{
         for (JButton button: buttons){
             if (e.getSource() == button){
                 if (player1_turn){
-                    if (button.getText() == ""){
+                    if (button.getText().equals("")){
                         button.setForeground(new Color(255, 0, 0));
                         button.setText("×");
                         player1_turn = false;
-                        text_filed.setText("○の番です!");
+                        text_filed.setText("○のターンです!");
                         check();
                     } 
                 } else {
-                    if (button.getText() == ""){
+                    if (button.getText().equals("")){
                         button.setForeground(new Color(0, 0, 255));
                         button.setText("○");
                         player1_turn = true;
-                        text_filed.setText("×の番です!");
+                        text_filed.setText("×のターンです!");
                         check();
                     }
                 }
@@ -118,20 +118,20 @@ public class TicTacToe implements ActionListener{
                 (buttons[pos[1]].getText() == "×") &&
                 (buttons[pos[2]].getText() == "×")
             ){
-                checkWhichWin(pos[0], pos[1], pos[2]);
+                highlightTheLine(pos[0], pos[1], pos[2]);
                 text_filed.setText("×の勝ちです!!");
             } else if (
                 (buttons[pos[0]].getText() == "○") &&
                 (buttons[pos[1]].getText() == "○") &&
                 (buttons[pos[2]].getText() == "○")
             ){
-                checkWhichWin(pos[0], pos[1], pos[2]);
+                highlightTheLine(pos[0], pos[1], pos[2]);
                 text_filed.setText("○の勝ちです!!");
             }
         }
     }
 
-    public void checkWhichWin(int a, int b, int c){
+    public void highlightTheLine(int a, int b, int c){
 
         buttons[a].setBackground(Color.GREEN);
         buttons[b].setBackground(Color.GREEN);
