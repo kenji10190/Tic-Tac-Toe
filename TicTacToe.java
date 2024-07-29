@@ -35,6 +35,7 @@ public class TicTacToe implements ActionListener{
         button_panel.setLayout(new GridLayout(3,3));
         button_panel.setBackground(new Color(23,32,42));
 
+        // FlowLayoutはボタン用のパネル。水平方向に設置。
         retry_panel.setLayout(new FlowLayout(FlowLayout.CENTER));
         retry_panel.setBackground(new Color(23, 32, 42));
 
@@ -53,6 +54,7 @@ public class TicTacToe implements ActionListener{
         retry_button.setText("もう一回");
         retry_button.setFont(new Font("HGP創英角ﾎﾟｯﾌﾟ体", Font.PLAIN, 50));
         retry_button.setBackground(Color.WHITE);
+        // ボタンが押されるとresetGameが実行されるアクションリスナーをretry_buttonに追加する。
         retry_button.addActionListener(e -> resetGame());
         retry_panel.add(retry_button);
 
